@@ -1,0 +1,102 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
+targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_11
+
+archivesBaseName = 'lapi-annotation-processor'
+version = '1.0.0'
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
+}
+
+publishing {
+    repositories {
+        maven {
+            if(project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")){
+                name = "OSSRH"
+                def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
+                project.logger.lifecycle("OSSRH username and password given. CAN deploy.")
+            }else {
+                project.logger.lifecycle("no OSSRH username and password given. CANNOT deploy.")
+            }
+        }
+
+        maven {
+            if(project.hasProperty("githubUsername") && project.hasProperty("githubToken")){
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/lni-dev/lapi")
+                credentials {
+                    username = githubUsername
+                    password = githubToken
+                }
+                project.logger.lifecycle("github username and token given. CAN publish package.")
+            }else {
+                project.logger.lifecycle("no github username and token given. CANNOT publish package.")
+            }
+        }
+    }
+
+    publications {
+
+        annoProcessor(MavenPublication) {
+            artifactId = project.archivesBaseName
+            from components.java
+            pom {
+                name = 'LApi Annotation Processor'
+                description = 'Annotation Processor for LApi'
+                url = 'https://lni-dev.github.io/'
+                groupId = 'io.github.lni-dev'
+                version = project.version
+
+                developers {
+                    developer {
+                        id = 'linusdev'
+                        name = 'Linus Andera'
+                        email = 'einsuperlinus@gmail.com'
+                        organizationUrl = 'https://lni-dev.github.io/'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/lni-dev/lapi.git'
+                    developerConnection ='scm:git:ssh://github.com:lni-dev/lapi.git'
+                    url = 'http://github.com/lni-dev/lapi/tree/master'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    if(project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")){
+        sign publishing.publications.annoProcessor
+        project.logger.lifecycle("Signing information given. SIGNING.")
+    }else {
+        project.logger.lifecycle("No Signing information given. CANNOT sign.")
+    }
+}
