@@ -87,7 +87,7 @@ public class CommandAnnotationProcessor extends AbstractProcessor {
             BufferedReader reader = null;
             try {
                 FileObject file = processingEnv.getFiler().getResource(StandardLocation.CLASS_OUTPUT, "",
-                        SERVICES_FOLDER + COMMAND_ANNOTATION_QUALIFIED_NAME);
+                        SERVICES_FOLDER + BASE_COMMAND_QUALIFIED_NAME);
 
                 reader = new BufferedReader(new InputStreamReader(file.openInputStream()));
                 String line = null;
@@ -112,7 +112,7 @@ public class CommandAnnotationProcessor extends AbstractProcessor {
             Writer writer = null;
             try {
                 FileObject file = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "",
-                        SERVICES_FOLDER + COMMAND_ANNOTATION_QUALIFIED_NAME);
+                        SERVICES_FOLDER + BASE_COMMAND_QUALIFIED_NAME);
 
 
 
