@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2022 Linus Andera
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published
+ *     by the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 plugins {
     id 'java'
     id 'maven-publish'
@@ -73,6 +90,13 @@ publishing {
                 groupId = 'io.github.lni-dev'
                 version = project.version
 
+                licenses {
+                    license {
+                        name = 'GNU Affero General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/agpl-3.0.txt'
+                    }
+                }
+
                 developers {
                     developer {
                         id = 'linusdev'
@@ -83,9 +107,9 @@ publishing {
                 }
 
                 scm {
-                    connection = 'scm:git:git://github.com/lni-dev/lapi.git'
-                    developerConnection ='scm:git:ssh://github.com:lni-dev/lapi.git'
-                    url = 'http://github.com/lni-dev/lapi/tree/master'
+                    connection = 'scm:git:git://github.com/lni-dev/lapi-annotation-processor.git'
+                    developerConnection ='scm:git:ssh://github.com:lni-dev/lapi-annotation-processor.git'
+                    url = 'http://github.com/lni-dev/lapi-annotation-processor/tree/master'
                 }
             }
         }
