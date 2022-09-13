@@ -135,7 +135,7 @@ public class CommandAnnotationProcessor extends AbstractProcessor {
                 for (String name : qualifiedNames) {
                     if(!alreadyContained.contains(name)){
                         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Adding element: " + name);
-                        writer.append(name);
+                        writer.append("\n").append(name);
                     }
                 }
                 writer.close();
