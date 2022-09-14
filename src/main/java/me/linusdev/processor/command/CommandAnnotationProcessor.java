@@ -38,14 +38,32 @@ import java.util.Set;
 
 /**
  * processes the @Command annotation from lapi and automatically adds the corresponding service providers to the
- * META-INF/services folder
+ * {@value SERVICES_FOLDER} directory
  */
 @SupportedAnnotationTypes(CommandAnnotationProcessor.COMMAND_ANNOTATION_QUALIFIED_NAME)
 public class CommandAnnotationProcessor extends AbstractProcessor {
 
+    /**
+     * Qualified name of the @Command annotation from lapi
+     */
     public static final String COMMAND_ANNOTATION_QUALIFIED_NAME = "me.linusdev.lapi.api.manager.command.Command";
+
+    /**
+     * Qualified name of the BaseCommand class from lapi
+     */
     public static final String BASE_COMMAND_QUALIFIED_NAME = "me.linusdev.lapi.api.manager.command.BaseCommand";
+
+    /**
+     * Location of services files.
+     */
     public static final String SERVICES_FOLDER = "META-INF/services/";
+
+    /**
+     * Default constructor
+     */
+    public CommandAnnotationProcessor() {
+
+    }
 
     @Override
     public SourceVersion getSupportedSourceVersion() {
